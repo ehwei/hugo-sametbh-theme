@@ -1,0 +1,82 @@
+<!-- https://randomgeekery.org/post/2020/06/csv-and-data-tables-in-hugo -->
+{{ $caption := .Get "caption" }}
+{{ $useHeaderRow := .Get "header" | default true }}
+{{ $rows := .Inner | transform.Unmarshal }}
+
+{{ $height := "" -}}
+
+{{ with .Get "height" }}
+{{ $height = printf " data-height=\"%s\"" . -}}
+{{ end }}
+
+
+<table data-toggle="table"{{ $height }} id="table" class="table table-sm">
+  {{ with $caption }}<caption>{{ . }}</caption>{{ end }}
+  {{ if $useHeaderRow }}
+    {{ $headerRow := index $rows 0 }}
+    {{ $rows = after 1 $rows }}
+    <thead>
+      <tr>
+        {{ range $headerRow }}
+          <th data-sortable="true" id="{{ . | anchorize }}">{{ . }}</th>
+        {{ end }}
+      </tr>
+    </thead>
+  {{ end }}
+  {{ range $rows }}
+    <tr>
+      {{ range . }}
+        {{ if (findRE "^\\d+$" .) }}
+          <td class="numeric">{{ . }}</td>
+          {{ else }}
+          <td>{{ . }}</td>
+        {{ end }}
+      {{ end }}
+    </tr>
+  {{ end }}
+</table>
+
+<!-- <script>
+  var $table = $('#table');
+
+  function buildTable($el, cells, rows) {
+    var i;
+    var j;
+    var row;
+    var columns = [];
+    var data = [];
+
+    for (i = 0; i < cells; i++) {
+      columns.push({
+        field: 'field' + i,
+        title: 'Cell' + i,
+        sortable: true
+      });
+    }
+    for (i = 0; i < rows; i++) {
+      row = {};
+      for (j = 0; j < cells; j++) {
+        row['field' + j] = 'Row-' + i + '-' + j;
+      }
+      data.push(row);
+    }
+    $el.bootstrapTable('destroy').bootstrapTable({
+      columns: columns,
+      data: data
+    });
+  }
+
+  $(function () {
+    buildTable($table, 50, 50);
+  });
+</script> -->
+<!-- <script>
+  var $table = $('#table');
+
+  $(function() {
+    $table.bootstrapTable()
+  }
+  )
+</script> -->
+
+<!-- {{ partial "functions/format_table_percent" . }} -->

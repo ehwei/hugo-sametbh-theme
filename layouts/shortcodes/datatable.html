@@ -1,0 +1,34 @@
+<!-- https://input.sh/hugo-data-into-content-with-a-shortcode/ -->
+<!-- https://www.mybluelinux.com/how-create-bootstrap-tables-in-hugo/ -->
+{{ $htmlTable := .Inner | markdownify }}
+
+{{- $id := .Get "id" | default "table-id" -}}
+{{- $idTag := printf "id=\"datatable-%s\"" $id -}}
+
+{{ $caption := "" }}
+{{ $class := "" }}
+
+{{ with .Get "caption" }}
+  {{ $caption =  printf "\n<caption>%s</caption>\n" . }}
+{{ end }}
+
+{{ with .Get "class" }}
+  {{ $class = printf " class=\"%s\"" . }}
+{{ end }}
+
+{{ $oldTag := "<table>" }}
+{{ $newTag := printf "<table %s%s>%s" $idTag $class $caption }}
+
+{{ $htmlTable = replace $htmlTable $oldTag $newTag }}
+
+{{ $htmlTable | safeHTML }}
+
+<script>
+$(document).ready( function () {
+    $('#datatable-{{ $id }}').DataTable({
+        paging: false,
+        searching: false,
+       
+    });
+} );
+  </script>
