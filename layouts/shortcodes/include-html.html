@@ -1,3 +1,0 @@
-<!-- https://xa1.at/hugo-include-html/ -->
-{{ $file := .Get 0 }}
-{{ (printf "%s%s" .Page.File.Dir $file) | readFile | safeHTML }}

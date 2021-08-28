@@ -1,4 +1,0 @@
-{{ $item := replace (.Get 0) "-" "_" }}
-
-{{ $classes := "align-baseline" }}
-{{ partial "functions/get_icon_png.html" (dict "item" $item "size" 24 "style_class" $classes "style_id" "tft-icon") }}
