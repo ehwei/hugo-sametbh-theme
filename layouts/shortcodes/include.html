@@ -1,0 +1,6 @@
+{{- $file := print (.Get 0) ".md" -}}
+
+{{ with .Site.GetPage $file }}
+<p class="sc-include-page">Last updated: {{ .Lastmod.Format "January 2, 2006" }}</p>
+{{ .Content }}
+{{ end }}

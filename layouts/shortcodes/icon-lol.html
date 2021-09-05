@@ -1,0 +1,10 @@
+{{ $item := replace (.Get 0) "-" "_" }}
+{{ $type := "" }}
+{{ if (hasPrefix $item "s_")}}
+{{ $type = "shadow" }}
+{{ else }}
+{{ $type = "standard" }}
+{{ end }}
+
+<img width=32 height=32 class="pe-1 my-0 bg-transparent d-inline img-fluid" alt="$item"
+  src="https://raw.communitydragon.org/latest/game/assets/maps/particles/tft/item_icons/{{- $type -}}/{{- $item -}}.png" >

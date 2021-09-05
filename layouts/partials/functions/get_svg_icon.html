@@ -1,0 +1,7 @@
+{{ $icon_name := . }}
+
+<div class="inline-block w-6 h-6 svg-wrapper">
+    <div>
+        {{- partial (printf "svg/%s.html" $icon_name) -}}
+    </div>
+</div>

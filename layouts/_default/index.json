@@ -1,0 +1,10 @@
+{{- $index := slice -}}
+{{- $pages := site.RegularPages -}}
+{{- $hidden_pages := where .Site.RegularPages "Params.hidden" true -}}
+
+{{- range $pages -}}
+{{- if and (not .Draft) (not .Params.private) -}}
+    {{- $index = $index | append (dict "title" .Title "content" .Plain "permalink" .Permalink) -}}
+{{- end -}}
+{{- end -}}
+{{- $index | jsonify -}}
